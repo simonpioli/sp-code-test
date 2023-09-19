@@ -26,9 +26,15 @@ class FancyClothesApi
 
     private function buildRequest(): PendingRequest
     {
-        return Http::baseUrl(config('shop-api.baseUrl'))
+        $request = Http::baseUrl(config('shop-api.baseUrl'))
             ->withToken(config('shop-api.token'))
             ->asJson()
             ->acceptJson();
+
+        if (app()->environment('local')) {
+            $request->withOptions(['verify' => false]);
+        }
+
+        return $request;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\FancyClothesApi;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,9 +13,9 @@ class ProductController extends Controller
         //
     }
 
-    public function list()
+    public function index(): View
     {
-        $products = $this->clothesApi->getListProducts();
+        $products = $this->clothesApi->getListProducts()->json();
 
         return view('products.list', [
             'products' => $products,
